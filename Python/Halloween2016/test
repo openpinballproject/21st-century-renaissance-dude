@@ -1,0 +1,2 @@
+speaker-test -c2
+aplay -l
