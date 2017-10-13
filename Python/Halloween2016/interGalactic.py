@@ -1,14 +1,57 @@
-# NeoPixel library strandtest example
-# Author: Tony DiCola (tony@tonydicola.com)
+#!/usr/bin/env python
 #
-# Direct port of the Arduino NeoPixel library strandtest example.  Showcases
-# various animations on a strip of NeoPixels.
+#===============================================================================
+#
+#                         OOOO
+#                       OOOOOOOO
+#      PPPPPPPPPPPPP   OOO    OOO   PPPPPPPPPPPPP
+#    PPPPPPPPPPPPPP   OOO      OOO   PPPPPPPPPPPPPP
+#   PPP         PPP   OOO      OOO   PPP         PPP
+#  PPP          PPP   OOO      OOO   PPP          PPP
+#  PPP          PPP   OOO      OOO   PPP          PPP
+#  PPP          PPP   OOO      OOO   PPP          PPP
+#   PPP         PPP   OOO      OOO   PPP         PPP
+#    PPPPPPPPPPPPPP   OOO      OOO   PPPPPPPPPPPPPP
+#     PPPPPPPPPPPPP   OOO      OOO   PPP
+#               PPP   OOO      OOO   PPP
+#               PPP   OOO      OOO   PPP
+#               PPP   OOO      OOO   PPP
+#               PPP    OOO    OOO    PPP
+#               PPP     OOOOOOOO     PPP
+#              PPPPP      OOOO      PPPPP
+#
+# @file:   interGalactic.py
+# @author: Hugh Spahr
+# @date:   10/10/2016
+#
+# @note:   Open Pinball Project
+#          Copyright 2016, Hugh Spahr
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#===============================================================================
+#
+# Main program to run the Halloween 2016 costume.  It plays a 48s sample
+# of Intergalactic by the Beastie Boys, and animates LED lights to synchronize
+# with the music.  To start the show, a button is pressed and released.
+#
+#===============================================================================
 import time
 import datetime
 import pygame
 from time import sleep
 from neopixel import *
-import random
 
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)

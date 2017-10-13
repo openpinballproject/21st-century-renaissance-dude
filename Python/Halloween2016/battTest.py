@@ -1,12 +1,52 @@
-# NeoPixel library strandtest example
-# Author: Tony DiCola (tony@tonydicola.com)
+#!/usr/bin/env python
 #
-# Direct port of the Arduino NeoPixel library strandtest example.  Showcases
-# various animations on a strip of NeoPixels.
+#===============================================================================
+#
+#                         OOOO
+#                       OOOOOOOO
+#      PPPPPPPPPPPPP   OOO    OOO   PPPPPPPPPPPPP
+#    PPPPPPPPPPPPPP   OOO      OOO   PPPPPPPPPPPPPP
+#   PPP         PPP   OOO      OOO   PPP         PPP
+#  PPP          PPP   OOO      OOO   PPP          PPP
+#  PPP          PPP   OOO      OOO   PPP          PPP
+#  PPP          PPP   OOO      OOO   PPP          PPP
+#   PPP         PPP   OOO      OOO   PPP         PPP
+#    PPPPPPPPPPPPPP   OOO      OOO   PPPPPPPPPPPPPP
+#     PPPPPPPPPPPPP   OOO      OOO   PPP
+#               PPP   OOO      OOO   PPP
+#               PPP   OOO      OOO   PPP
+#               PPP   OOO      OOO   PPP
+#               PPP    OOO    OOO    PPP
+#               PPP     OOOOOOOO     PPP
+#              PPPPP      OOOO      PPPPP
+#
+# @file:   battTest.py
+# @author: Hugh Spahr
+# @date:   10/10/2016
+#
+# @note:   Open Pinball Project
+#          Copyright 2016, Hugh Spahr
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#===============================================================================
+#
+# Battery test to verify cell phone recharge battery pack has enough power to
+# run Halloween costume for at least 2 hours
+#
+#===============================================================================
 import time
-import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 debug = False
 if not debug:
@@ -36,59 +76,6 @@ Blue = Color(0, 0, 255)
 White = Color(255, 255, 255)
 Black = 0
 
-def createTrail(strip, substrip, color, bgnd_color=0, forward=True, erase_prev=False, increment=1):
-   """Create a trail of lights"""
-   setpixels = []
-   clearpixels = []
-   if forward:
-      for i in range(substrip.startIdx + (substrip.currIdx % increment), substrip.startIdx + substrip.currIdx, increment):
-         # Turn off previous LED
-         if erase_prev and (i != substrip.startIdx):
-            if not debug:
-               strip.setPixelColor(i - 1, bgnd_color)
-            clearpixels.append(i - 1)
-         # Turn on new LED
-         if not debug:
-            strip.setPixelColor(i, color)
-         setpixels.append(i)
-   else:
-      for i in range(substrip.startIdx + substrip.numLeds - 1 - (substrip.currIdx % increment), substrip.startIdx + substrip.numLeds - 1 - substrip.currIdx, -increment):
-         # Turn off previous LED
-         if erase_prev and (i != substrip.startIdx + substrip.numLeds - 1):
-            if not debug:
-               strip.setPixelColor(i + 1, bgnd_color)
-            clearpixels.append(i + 1)
-         # Turn on new LED
-         if not debug:
-            strip.setPixelColor(i, color)
-         setpixels.append(i)
-   substrip.currIdx += 1
-   if (substrip.currIdx > substrip.numLeds):
-      substrip.currIdx -= increment
-   if debug:
-      print "Setpixels = " + repr(setpixels)
-      print "Clearpixels = " + repr(clearpixels)
-
-def setColor(strip, substrip, color):
-   """Set color across whole substrip"""
-   setpixels = []
-   for i in range(substrip.startIdx, substrip.startIdx + substrip.numLeds):
-      if not debug:
-         strip.setPixelColor(i, color)
-      setpixels.append(i)
-   if debug:
-      print "Setpixels = " + repr(setpixels)
-
-def openMouth(strip, color):
-   """Set color on whole mouth"""
-   setColor(strip, BtmMouth, color)
-   setColor(strip, TopMouth, color)
-
-def closeMouth(strip, color):
-   """Set color on only bottom mouth"""
-   setColor(strip, BtmMouth, color)
-   setColor(strip, TopMouth, 0)
-      
 def theaterChase(strip, substrip, color, bgnd_color=0, forward=True, erase_prev=True, increment=3):
    """Movie theater light style chaser animation."""
    setpixels = []
